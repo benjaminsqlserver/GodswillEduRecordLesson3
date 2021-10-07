@@ -1,0 +1,241 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Course Of Study Name",
+                              "component": "CourseOfStudyName",
+                              "name": "CourseOfStudyNameLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 300,
+                              "type": "textbox",
+                              "name": "CourseOfStudyName",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${schoolcourse.CourseOfStudyName}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "CourseOfStudyNameRequiredValidator",
+                              "component": "CourseOfStudyName",
+                              "text": "CourseOfStudyName is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Course Fee",
+                              "component": "CourseFee",
+                              "name": "CourseFeeLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "decimal?",
+                              "type": "numeric",
+                              "name": "CourseFee",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${schoolcourse.CourseFee}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Duration In Months",
+                              "component": "DurationInMonths",
+                              "name": "DurationInMonthsLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int",
+                              "type": "numeric",
+                              "name": "DurationInMonths",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${schoolcourse.DurationInMonths}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "DurationInMonthsRequiredValidator",
+                              "component": "DurationInMonths",
+                              "text": "DurationInMonths is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "style": {
+                                "marginLeft": "1rem"
+                              },
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new SchoolCourse!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ConData.createSchoolCourse",
+                        "parameters": [
+                          {
+                            "name": "SchoolCourse",
+                            "value": "${schoolcourse}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${schoolcourse}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${schoolcourse}",
+                  "visible": "${schoolcourse != null}",
+                  "itemType": "GodswillEduRecord.Models.ConData.SchoolCourse"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "schoolcourse",
+        "type": "set",
+        "value": "new GodswillEduRecord.Models.ConData.SchoolCourse(){}",
+        "valueType": "GodswillEduRecord.Models.ConData.SchoolCourse"
+      }
+    ]
+  },
+  "name": "Add School Course",
+  "layout": "Main",
+  "access": [
+    "Authenticated"
+  ]
+}

@@ -1,0 +1,374 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Next Of Kins"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "icon": "add_circle_outline",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "text": "Add",
+                  "type": "button",
+                  "events": {
+                    "click": [
+                      {
+                        "path": "add-next-of-kin",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "events": {
+                    "click": [
+                      {
+                        "condition": "${event?.Value == \"csv\"}",
+                        "fileName": "Next Of Kins",
+                        "name": "ConData.getNextOfKins",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "${grid0.Query.Filter}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${grid0.Query.OrderBy}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "StudentBiodatum,Relationship"
+                          },
+                          {
+                            "name": "$select",
+                            "value": "NextOfKinID,StudentBiodatum.Surname,NameOfNextOfKin,Relationship.RelationshipName,NextOfKinPhoneNo,NextOfKinEmail,NextOfKinContactAddress"
+                          }
+                        ],
+                        "type": "export"
+                      },
+                      {
+                        "condition": "${event == null || event.Value == \"xlsx\"}",
+                        "fileName": "Next Of Kins",
+                        "format": "xlsx",
+                        "name": "ConData.getNextOfKins",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "${grid0.Query.Filter}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${grid0.Query.OrderBy}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "StudentBiodatum,Relationship"
+                          },
+                          {
+                            "name": "$select",
+                            "value": "NextOfKinID,StudentBiodatum.Surname,NameOfNextOfKin,Relationship.RelationshipName,NextOfKinPhoneNo,NextOfKinEmail,NextOfKinContactAddress"
+                          }
+                        ],
+                        "type": "export"
+                      }
+                    ]
+                  },
+                  "icon": "get_app",
+                  "items": [
+                    {
+                      "icon": "",
+                      "text": "Excel",
+                      "value": "xlsx"
+                    },
+                    {
+                      "icon": "",
+                      "text": "CSV",
+                      "value": "csv"
+                    }
+                  ],
+                  "name": "splitbutton0",
+                  "style": {
+                    "marginLeft": "10px",
+                    "marginBottom": "10px"
+                  },
+                  "text": "Export",
+                  "type": "splitbutton"
+                },
+                {
+                  "attributes": [
+                    {
+                      "name": "@oninput",
+                      "value": "@(async(args) => {search = $\"{args.Value}\";await grid0.GoToPage(0);await grid0.Reload();})"
+                    }
+                  ],
+                  "name": "textbox0",
+                  "placeholder": "Search ...",
+                  "style": {
+                    "display": "block",
+                    "marginBottom": "10px",
+                    "width": "100%"
+                  },
+                  "type": "textbox",
+                  "value": ""
+                },
+                {
+                  "name": "grid0",
+                  "allowFiltering": true,
+                  "filterMode": "advanced",
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "data": "${getNextOfKinsResult}",
+                  "events": {
+                    "loadData": [
+                      {
+                        "name": "ConData.getNextOfKins",
+                        "parameters": [
+                          {
+                            "name": "$top",
+                            "value": "event.top"
+                          },
+                          {
+                            "name": "$skip",
+                            "value": "event.skip"
+                          },
+                          {
+                            "name": "$count",
+                            "value": "event.top != null && event.skip != null"
+                          },
+                          {
+                            "name": "$filter",
+                            "value": [
+                              {
+                                "filters": [
+                                  {
+                                    "operation": "contains",
+                                    "property": "NameOfNextOfKin",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "NextOfKinPhoneNo",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "NextOfKinEmail",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "NextOfKinContactAddress",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  }
+                                ],
+                                "operator": "or"
+                              },
+                              {
+                                "value": "${(string.IsNullOrEmpty(event.filter)? \"true\" : event.filter)}"
+                              }
+                            ],
+                            "operator": "and"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${event.orderby}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "StudentBiodatum,Relationship"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "getNextOfKinsResult",
+                            "type": "set",
+                            "value": "${result.Value.AsODataEnumerable()}",
+                            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.NextOfKin>"
+                          },
+                          {
+                            "name": "getNextOfKinsCount",
+                            "type": "set",
+                            "value": "${result.Count}",
+                            "valueType": "int"
+                          }
+                        ],
+                        "type": "invoke",
+                        "error": [
+                          {
+                            "detail": "Unable to load NextOfKins",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ]
+                      }
+                    ],
+                    "rowSelect": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "NextOfKinID",
+                            "value": "${event.NextOfKinID}"
+                          }
+                        ],
+                        "path": "edit-next-of-kin",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "title": "",
+                  "columns": [
+                    {
+                      "property": "NextOfKinID",
+                      "title": "Next Of Kin ID"
+                    },
+                    {
+                      "property": "BiodataID",
+                      "sortProperty": "StudentBiodatum.Surname",
+                      "filterProperty": "StudentBiodatum.Surname",
+                      "template": "${data.StudentBiodatum?.Surname}",
+                      "title": "Student Biodatum"
+                    },
+                    {
+                      "property": "NameOfNextOfKin",
+                      "title": "Name Of Next Of Kin"
+                    },
+                    {
+                      "property": "RelationshipID",
+                      "sortProperty": "Relationship.RelationshipName",
+                      "filterProperty": "Relationship.RelationshipName",
+                      "template": "${data.Relationship?.RelationshipName}",
+                      "title": "Relationship"
+                    },
+                    {
+                      "property": "NextOfKinPhoneNo",
+                      "title": "Next Of Kin Phone No"
+                    },
+                    {
+                      "property": "NextOfKinEmail",
+                      "title": "Next Of Kin Email"
+                    },
+                    {
+                      "property": "NextOfKinContactAddress",
+                      "title": "Next Of Kin Contact Address"
+                    },
+                    {
+                      "filterable": false,
+                      "sortable": false,
+                      "width": "70px",
+                      "textAlign": "center",
+                      "template": [
+                        {
+                          "attributes": [
+                            {
+                              "name": "@onclick:stopPropagation",
+                              "value": true
+                            }
+                          ],
+                          "buttonStyle": "danger",
+                          "icon": "close",
+                          "name": "gridDeleteButton",
+                          "text": "",
+                          "size": "sm",
+                          "type": "button",
+                          "events": {
+                            "click": [
+                              {
+                                "condition": "await DialogService.Confirm(\"Are you sure you want to delete this record?\") == true",
+                                "error": [
+                                  {
+                                    "detail": "Unable to delete NextOfKin",
+                                    "severity": "error",
+                                    "summary": "Error",
+                                    "type": "notify"
+                                  }
+                                ],
+                                "name": "ConData.deleteNextOfKin",
+                                "parameters": [
+                                  {
+                                    "name": "NextOfKinID",
+                                    "value": "${data.NextOfKinID}"
+                                  }
+                                ],
+                                "then": [
+                                  {
+                                    "code": "await grid0.Reload();",
+                                    "condition": "result != null",
+                                    "type": "execute"
+                                  }
+                                ],
+                                "type": "invoke"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "datagrid",
+                  "count": "${getNextOfKinsCount}",
+                  "itemType": "GodswillEduRecord.Models.ConData.NextOfKin"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "condition": "string.IsNullOrEmpty(search)",
+        "name": "search",
+        "type": "set",
+        "value": "\"\"",
+        "valueType": "string"
+      }
+    ]
+  },
+  "name": "Next Of Kins",
+  "layout": "Main",
+  "access": [
+    "Authenticated"
+  ]
+}

@@ -1,0 +1,67 @@
+﻿@page "/add-school-course"
+@layout MainLayout
+@inherits GodswillEduRecord.Pages.AddSchoolCourseComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using GodswillEduRecord.Models.ConData
+@using Microsoft.AspNetCore.Identity;
+@using GodswillEduRecord.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm Data="@schoolcourse" Visible="@(schoolcourse != null)" TItem="GodswillEduRecord.Models.ConData.SchoolCourse" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Course Of Study Name" Component="CourseOfStudyName" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="300" style="display: block; width: 100%" @bind-Value="@(schoolcourse.CourseOfStudyName)" Name="CourseOfStudyName">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="CourseOfStudyName" Text="CourseOfStudyName is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Course Fee" Component="CourseFee" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenNumeric style="width: 100%" @bind-Value="@(schoolcourse.CourseFee)" Name="CourseFee">
+                </RadzenNumeric>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Duration In Months" Component="DurationInMonths" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenNumeric style="display: block; width: 100%" @bind-Value="@(schoolcourse.DurationInMonths)" Name="DurationInMonths">
+                </RadzenNumeric>
+                <RadzenRequiredValidator Component="DurationInMonths" Text="DurationInMonths is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" style="margin-left: 1rem" Text="Cancel" Click="@Button2Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

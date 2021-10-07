@@ -1,0 +1,350 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Student Course Payments"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "icon": "add_circle_outline",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "text": "Add",
+                  "type": "button",
+                  "events": {
+                    "click": [
+                      {
+                        "path": "add-student-course-payment",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "events": {
+                    "click": [
+                      {
+                        "condition": "${event?.Value == \"csv\"}",
+                        "fileName": "Student Course Payments",
+                        "name": "ConData.getStudentCoursePayments",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "${grid0.Query.Filter}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${grid0.Query.OrderBy}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "StudentBiodatum,SchoolCourse"
+                          },
+                          {
+                            "name": "$select",
+                            "value": "PaymentID,StudentBiodatum.Surname,SchoolCourse.CourseOfStudyName,PaymentDate,CourseFee,AmountPaid,Balance"
+                          }
+                        ],
+                        "type": "export"
+                      },
+                      {
+                        "condition": "${event == null || event.Value == \"xlsx\"}",
+                        "fileName": "Student Course Payments",
+                        "format": "xlsx",
+                        "name": "ConData.getStudentCoursePayments",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "${grid0.Query.Filter}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${grid0.Query.OrderBy}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "StudentBiodatum,SchoolCourse"
+                          },
+                          {
+                            "name": "$select",
+                            "value": "PaymentID,StudentBiodatum.Surname,SchoolCourse.CourseOfStudyName,PaymentDate,CourseFee,AmountPaid,Balance"
+                          }
+                        ],
+                        "type": "export"
+                      }
+                    ]
+                  },
+                  "icon": "get_app",
+                  "items": [
+                    {
+                      "icon": "",
+                      "text": "Excel",
+                      "value": "xlsx"
+                    },
+                    {
+                      "icon": "",
+                      "text": "CSV",
+                      "value": "csv"
+                    }
+                  ],
+                  "name": "splitbutton0",
+                  "style": {
+                    "marginLeft": "10px",
+                    "marginBottom": "10px"
+                  },
+                  "text": "Export",
+                  "type": "splitbutton"
+                },
+                {
+                  "attributes": [
+                    {
+                      "name": "@oninput",
+                      "value": "@(async(args) => {search = $\"{args.Value}\";await grid0.GoToPage(0);await grid0.Reload();})"
+                    }
+                  ],
+                  "name": "textbox0",
+                  "placeholder": "Search ...",
+                  "style": {
+                    "display": "block",
+                    "marginBottom": "10px",
+                    "width": "100%"
+                  },
+                  "type": "textbox",
+                  "value": ""
+                },
+                {
+                  "name": "grid0",
+                  "allowFiltering": true,
+                  "filterMode": "advanced",
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "data": "${getStudentCoursePaymentsResult}",
+                  "events": {
+                    "loadData": [
+                      {
+                        "name": "ConData.getStudentCoursePayments",
+                        "parameters": [
+                          {
+                            "name": "$top",
+                            "value": "event.top"
+                          },
+                          {
+                            "name": "$skip",
+                            "value": "event.skip"
+                          },
+                          {
+                            "name": "$count",
+                            "value": "event.top != null && event.skip != null"
+                          },
+                          {
+                            "name": "$filter",
+                            "value": [
+                              {
+                                "filters": [],
+                                "operator": "or"
+                              },
+                              {
+                                "value": "${(string.IsNullOrEmpty(event.filter)? \"true\" : event.filter)}"
+                              }
+                            ],
+                            "operator": "and"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${event.orderby}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "StudentBiodatum,SchoolCourse"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "getStudentCoursePaymentsResult",
+                            "type": "set",
+                            "value": "${result.Value.AsODataEnumerable()}",
+                            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.StudentCoursePayment>"
+                          },
+                          {
+                            "name": "getStudentCoursePaymentsCount",
+                            "type": "set",
+                            "value": "${result.Count}",
+                            "valueType": "int"
+                          }
+                        ],
+                        "type": "invoke",
+                        "error": [
+                          {
+                            "detail": "Unable to load StudentCoursePayments",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ]
+                      }
+                    ],
+                    "rowSelect": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "PaymentID",
+                            "value": "${event.PaymentID}"
+                          }
+                        ],
+                        "path": "edit-student-course-payment",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "title": "",
+                  "columns": [
+                    {
+                      "property": "PaymentID",
+                      "title": "Payment ID"
+                    },
+                    {
+                      "property": "BiodataID",
+                      "sortProperty": "StudentBiodatum.Surname",
+                      "filterProperty": "StudentBiodatum.Surname",
+                      "template": "${data.StudentBiodatum?.Surname}",
+                      "title": "Student Biodatum"
+                    },
+                    {
+                      "property": "CourseOfStudyID",
+                      "sortProperty": "SchoolCourse.CourseOfStudyName",
+                      "filterProperty": "SchoolCourse.CourseOfStudyName",
+                      "template": "${data.SchoolCourse?.CourseOfStudyName}",
+                      "title": "School Course"
+                    },
+                    {
+                      "property": "PaymentDate",
+                      "formatString": "{0:dd/MM/yyyy}",
+                      "title": "Payment Date"
+                    },
+                    {
+                      "property": "CourseFee",
+                      "title": "Course Fee"
+                    },
+                    {
+                      "property": "AmountPaid",
+                      "title": "Amount Paid"
+                    },
+                    {
+                      "property": "Balance",
+                      "title": "Balance"
+                    },
+                    {
+                      "filterable": false,
+                      "sortable": false,
+                      "width": "70px",
+                      "textAlign": "center",
+                      "template": [
+                        {
+                          "attributes": [
+                            {
+                              "name": "@onclick:stopPropagation",
+                              "value": true
+                            }
+                          ],
+                          "buttonStyle": "danger",
+                          "icon": "close",
+                          "name": "gridDeleteButton",
+                          "text": "",
+                          "size": "sm",
+                          "type": "button",
+                          "events": {
+                            "click": [
+                              {
+                                "condition": "await DialogService.Confirm(\"Are you sure you want to delete this record?\") == true",
+                                "error": [
+                                  {
+                                    "detail": "Unable to delete StudentCoursePayment",
+                                    "severity": "error",
+                                    "summary": "Error",
+                                    "type": "notify"
+                                  }
+                                ],
+                                "name": "ConData.deleteStudentCoursePayment",
+                                "parameters": [
+                                  {
+                                    "name": "PaymentID",
+                                    "value": "${data.PaymentID}"
+                                  }
+                                ],
+                                "then": [
+                                  {
+                                    "code": "await grid0.Reload();",
+                                    "condition": "result != null",
+                                    "type": "execute"
+                                  }
+                                ],
+                                "type": "invoke"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "datagrid",
+                  "count": "${getStudentCoursePaymentsCount}",
+                  "itemType": "GodswillEduRecord.Models.ConData.StudentCoursePayment"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "condition": "string.IsNullOrEmpty(search)",
+        "name": "search",
+        "type": "set",
+        "value": "\"\"",
+        "valueType": "string"
+      }
+    ]
+  },
+  "name": "Student Course Payments",
+  "layout": "Main",
+  "access": [
+    "Authenticated"
+  ]
+}

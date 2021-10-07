@@ -1,0 +1,53 @@
+﻿@page "/school-courses"
+@layout MainLayout
+@inherits GodswillEduRecord.Pages.SchoolCoursesComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using GodswillEduRecord.Models.ConData
+@using Microsoft.AspNetCore.Identity;
+@using GodswillEduRecord.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="School Courses">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@Button0Click">
+        </RadzenButton>
+        <RadzenSplitButton Icon="get_app" style="margin-left: 10px; margin-bottom: 10px" Text="Export" Click="@Splitbutton0Click">
+          <ChildContent>
+            <RadzenSplitButtonItem Text="Excel" Value="xlsx">
+            </RadzenSplitButtonItem>
+            <RadzenSplitButtonItem Text="CSV" Value="csv">
+            </RadzenSplitButtonItem>
+          </ChildContent>
+        </RadzenSplitButton>
+        <RadzenTextBox Placeholder="Search ..." style="display: block; margin-bottom: 10px; width: 100%" Name="Textbox0" @oninput="@(async(args) => {search = $"{args.Value}";await grid0.GoToPage(0);await grid0.Reload();})">
+        </RadzenTextBox>
+        <RadzenDataGrid @ref="grid0" AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" Data="@getSchoolCoursesResult" Count="@getSchoolCoursesCount" TItem="GodswillEduRecord.Models.ConData.SchoolCourse" LoadData="@Grid0LoadData" RowSelect="@Grid0RowSelect">
+          <Columns>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.SchoolCourse" Property="CourseOfStudyID" Title="Course Of Study ID">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.SchoolCourse" Property="CourseOfStudyName" Title="Course Of Study Name">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.SchoolCourse" Property="CourseFee" Title="Course Fee">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.SchoolCourse" Property="DurationInMonths" Title="Duration In Months">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.SchoolCourse" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+              <Template Context="godswillEduRecordModelsConDataSchoolCourse">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, godswillEduRecordModelsConDataSchoolCourse))" @onclick:stopPropagation="true">
+                </RadzenButton>
+              </Template>
+            </RadzenDataGridColumn>
+          </Columns>
+        </RadzenDataGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

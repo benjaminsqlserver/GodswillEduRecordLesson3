@@ -1,0 +1,572 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "components": [
+            {
+              "class": "col-md-9",
+              "components": [
+                {
+                  "name": "closeLabel",
+                  "style": {
+                    "fontWeight": "bold"
+                  },
+                  "text": "Item no longer available.",
+                  "type": "label",
+                  "visible": "${!canEdit}"
+                }
+              ],
+              "name": "col0",
+              "type": "col"
+            },
+            {
+              "class": "col-md-3",
+              "components": [
+                {
+                  "buttonStyle": "secondary",
+                  "events": {
+                    "click": [
+                      {
+                        "type": "close-popup"
+                      }
+                    ]
+                  },
+                  "icon": "",
+                  "name": "closeButton",
+                  "style": {
+                    "marginBottom": "20px"
+                  },
+                  "text": "Close",
+                  "type": "button",
+                  "visible": "${!canEdit}"
+                }
+              ],
+              "name": "col1",
+              "type": "col"
+            }
+          ],
+          "name": "row0",
+          "style": {},
+          "type": "row"
+        },
+        {
+          "components": [
+            {
+              "class": "col-md-9",
+              "components": [
+                {
+                  "name": "label0",
+                  "style": {
+                    "fontWeight": "bold"
+                  },
+                  "text": "Another user has made conflicting changes to one or more of the fields you have modified. Please reload.",
+                  "type": "label",
+                  "visible": "${hasChanges}"
+                }
+              ],
+              "name": "col0",
+              "type": "col"
+            },
+            {
+              "class": "col-md-3",
+              "components": [
+                {
+                  "buttonStyle": "secondary",
+                  "events": {
+                    "click": [
+                      {
+                        "code": "await this.Load()",
+                        "type": "execute"
+                      }
+                    ]
+                  },
+                  "icon": "autorenew",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "20px"
+                  },
+                  "text": "Reload",
+                  "type": "button",
+                  "visible": "${hasChanges}"
+                }
+              ],
+              "name": "col1",
+              "type": "col"
+            }
+          ],
+          "name": "row0",
+          "style": {},
+          "type": "row"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Student Biodatum",
+                              "component": "BiodataID",
+                              "name": "BiodataIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStudentBiodataResult}",
+                              "textProperty": "Surname",
+                              "valueProperty": "BiodataID",
+                              "placeholder": "Choose StudentBiodatum",
+                              "valueType": "Int64",
+                              "type": "dropdown",
+                              "name": "BiodataID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${nextofkin.BiodataID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "BiodataIDRequiredValidator",
+                              "component": "BiodataID",
+                              "text": "BiodataID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Name Of Next Of Kin",
+                              "component": "NameOfNextOfKin",
+                              "name": "NameOfNextOfKinLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 250,
+                              "type": "textbox",
+                              "name": "NameOfNextOfKin",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${nextofkin.NameOfNextOfKin}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "NameOfNextOfKinRequiredValidator",
+                              "component": "NameOfNextOfKin",
+                              "text": "NameOfNextOfKin is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Relationship",
+                              "component": "RelationshipID",
+                              "name": "RelationshipIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getRelationshipsResult}",
+                              "textProperty": "RelationshipName",
+                              "valueProperty": "RelationshipID",
+                              "placeholder": "Choose Relationship",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "RelationshipID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${nextofkin.RelationshipID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "RelationshipIDRequiredValidator",
+                              "component": "RelationshipID",
+                              "text": "RelationshipID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Next Of Kin Phone No",
+                              "component": "NextOfKinPhoneNo",
+                              "name": "NextOfKinPhoneNoLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "NextOfKinPhoneNo",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${nextofkin.NextOfKinPhoneNo}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "NextOfKinPhoneNoRequiredValidator",
+                              "component": "NextOfKinPhoneNo",
+                              "text": "NextOfKinPhoneNo is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Next Of Kin Email",
+                              "component": "NextOfKinEmail",
+                              "name": "NextOfKinEmailLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "NextOfKinEmail",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${nextofkin.NextOfKinEmail}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "NextOfKinEmailRequiredValidator",
+                              "component": "NextOfKinEmail",
+                              "text": "NextOfKinEmail is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Next Of Kin Contact Address",
+                              "component": "NextOfKinContactAddress",
+                              "name": "NextOfKinContactAddressLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "type": "textbox",
+                              "name": "NextOfKinContactAddress",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${nextofkin.NextOfKinContactAddress}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "NextOfKinContactAddressRequiredValidator",
+                              "component": "NextOfKinContactAddress",
+                              "text": "NextOfKinContactAddress is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "style": {
+                                "marginLeft": "1rem"
+                              },
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update NextOfKin",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ConData.updateNextOfKin",
+                        "parameters": [
+                          {
+                            "name": "NextOfKinID",
+                            "value": "${parameters.NextOfKinID}"
+                          },
+                          {
+                            "name": "NextOfKin",
+                            "value": "${nextofkin}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${nextofkin}",
+                            "condition": "result.StatusCode != System.Net.HttpStatusCode.PreconditionFailed"
+                          },
+                          {
+                            "name": "hasChanges",
+                            "type": "set",
+                            "value": "result.StatusCode == System.Net.HttpStatusCode.PreconditionFailed",
+                            "valueType": "bool"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "GodswillEduRecord.Models.ConData.NextOfKin",
+                  "data": "${nextofkin}",
+                  "visible": "${nextofkin != null && canEdit}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "hasChanges",
+        "type": "set",
+        "value": "false",
+        "valueType": "bool"
+      },
+      {
+        "name": "canEdit",
+        "type": "set",
+        "value": "true",
+        "valueType": "bool"
+      },
+      {
+        "name": "ConData.getNextOfKinByNextOfKinID",
+        "parameters": [
+          {
+            "name": "NextOfKinID",
+            "value": "${parameters.NextOfKinID}"
+          }
+        ],
+        "then": [
+          {
+            "name": "nextofkin",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "GodswillEduRecord.Models.ConData.NextOfKin"
+          },
+          {
+            "name": "canEdit",
+            "type": "set",
+            "value": "result != null",
+            "valueType": "bool"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      },
+      {
+        "name": "ConData.getStudentBiodata",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStudentBiodataResult",
+            "type": "set",
+            "value": "${result.Value.AsODataEnumerable()}",
+            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.StudentBiodatum>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ConData.getRelationships",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getRelationshipsResult",
+            "type": "set",
+            "value": "${result.Value.AsODataEnumerable()}",
+            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.Relationship>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Next Of Kin",
+  "layout": "Main",
+  "access": [
+    "Authenticated"
+  ]
+}

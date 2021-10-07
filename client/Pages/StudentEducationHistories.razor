@@ -1,0 +1,63 @@
+﻿@page "/student-education-histories"
+@layout MainLayout
+@inherits GodswillEduRecord.Pages.StudentEducationHistoriesComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using GodswillEduRecord.Models.ConData
+@using Microsoft.AspNetCore.Identity;
+@using GodswillEduRecord.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="Student Education Histories">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@Button0Click">
+        </RadzenButton>
+        <RadzenSplitButton Icon="get_app" style="margin-left: 10px; margin-bottom: 10px" Text="Export" Click="@Splitbutton0Click">
+          <ChildContent>
+            <RadzenSplitButtonItem Text="Excel" Value="xlsx">
+            </RadzenSplitButtonItem>
+            <RadzenSplitButtonItem Text="CSV" Value="csv">
+            </RadzenSplitButtonItem>
+          </ChildContent>
+        </RadzenSplitButton>
+        <RadzenTextBox Placeholder="Search ..." style="display: block; margin-bottom: 10px; width: 100%" Name="Textbox0" @oninput="@(async(args) => {search = $"{args.Value}";await grid0.GoToPage(0);await grid0.Reload();})">
+        </RadzenTextBox>
+        <RadzenDataGrid @ref="grid0" AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" Data="@getStudentEducationHistoriesResult" Count="@getStudentEducationHistoriesCount" TItem="GodswillEduRecord.Models.ConData.StudentEducationHistory" LoadData="@Grid0LoadData" RowSelect="@Grid0RowSelect">
+          <Columns>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.StudentEducationHistory" Property="EducationRecordID" Title="Education Record ID">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.StudentEducationHistory" Property="BiodataID" SortProperty="StudentBiodatum.Surname" FilterProperty="StudentBiodatum.Surname" Title="Student Biodatum">
+              <Template Context="data">
+              @(data.StudentBiodatum?.Surname)
+              </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.StudentEducationHistory" Property="NameOfInstitution" Title="Name Of Institution">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.StudentEducationHistory" Property="StartDate" FormatString="{0:dd/MM/yyyy}" Title="Start Date">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.StudentEducationHistory" Property="EndDate" FormatString="{0:dd/MM/yyyy}" Title="End Date">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.StudentEducationHistory" Property="QualificationObtainedID" SortProperty="Qualification.QualificationName" FilterProperty="Qualification.QualificationName" Title="Qualification">
+              <Template Context="data">
+              @(data.Qualification?.QualificationName)
+              </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.StudentEducationHistory" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+              <Template Context="godswillEduRecordModelsConDataStudentEducationHistory">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, godswillEduRecordModelsConDataStudentEducationHistory))" @onclick:stopPropagation="true">
+                </RadzenButton>
+              </Template>
+            </RadzenDataGridColumn>
+          </Columns>
+        </RadzenDataGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

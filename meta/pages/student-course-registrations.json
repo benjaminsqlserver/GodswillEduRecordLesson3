@@ -1,0 +1,375 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Student Course Registrations"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "icon": "add_circle_outline",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "text": "Add",
+                  "type": "button",
+                  "events": {
+                    "click": [
+                      {
+                        "path": "add-student-course-registration",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "events": {
+                    "click": [
+                      {
+                        "condition": "${event?.Value == \"csv\"}",
+                        "fileName": "Student Course Registrations",
+                        "name": "ConData.getStudentCourseRegistrations",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "${grid0.Query.Filter}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${grid0.Query.OrderBy}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "StudentBiodatum,SchoolCourse,StudySession"
+                          },
+                          {
+                            "name": "$select",
+                            "value": "CourseRegistrationID,StudentBiodatum.Surname,SchoolCourse.CourseOfStudyName,StudySession.StudySessionName,IsPrivateStudent,PrivateTrainingVenue,PrivateTrainingTime,Signature"
+                          }
+                        ],
+                        "type": "export"
+                      },
+                      {
+                        "condition": "${event == null || event.Value == \"xlsx\"}",
+                        "fileName": "Student Course Registrations",
+                        "format": "xlsx",
+                        "name": "ConData.getStudentCourseRegistrations",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "${grid0.Query.Filter}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${grid0.Query.OrderBy}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "StudentBiodatum,SchoolCourse,StudySession"
+                          },
+                          {
+                            "name": "$select",
+                            "value": "CourseRegistrationID,StudentBiodatum.Surname,SchoolCourse.CourseOfStudyName,StudySession.StudySessionName,IsPrivateStudent,PrivateTrainingVenue,PrivateTrainingTime,Signature"
+                          }
+                        ],
+                        "type": "export"
+                      }
+                    ]
+                  },
+                  "icon": "get_app",
+                  "items": [
+                    {
+                      "icon": "",
+                      "text": "Excel",
+                      "value": "xlsx"
+                    },
+                    {
+                      "icon": "",
+                      "text": "CSV",
+                      "value": "csv"
+                    }
+                  ],
+                  "name": "splitbutton0",
+                  "style": {
+                    "marginLeft": "10px",
+                    "marginBottom": "10px"
+                  },
+                  "text": "Export",
+                  "type": "splitbutton"
+                },
+                {
+                  "attributes": [
+                    {
+                      "name": "@oninput",
+                      "value": "@(async(args) => {search = $\"{args.Value}\";await grid0.GoToPage(0);await grid0.Reload();})"
+                    }
+                  ],
+                  "name": "textbox0",
+                  "placeholder": "Search ...",
+                  "style": {
+                    "display": "block",
+                    "marginBottom": "10px",
+                    "width": "100%"
+                  },
+                  "type": "textbox",
+                  "value": ""
+                },
+                {
+                  "name": "grid0",
+                  "allowFiltering": true,
+                  "filterMode": "advanced",
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "data": "${getStudentCourseRegistrationsResult}",
+                  "events": {
+                    "loadData": [
+                      {
+                        "name": "ConData.getStudentCourseRegistrations",
+                        "parameters": [
+                          {
+                            "name": "$top",
+                            "value": "event.top"
+                          },
+                          {
+                            "name": "$skip",
+                            "value": "event.skip"
+                          },
+                          {
+                            "name": "$count",
+                            "value": "event.top != null && event.skip != null"
+                          },
+                          {
+                            "name": "$filter",
+                            "value": [
+                              {
+                                "filters": [
+                                  {
+                                    "operation": "contains",
+                                    "property": "PrivateTrainingVenue",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "PrivateTrainingTime",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "Signature",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  }
+                                ],
+                                "operator": "or"
+                              },
+                              {
+                                "value": "${(string.IsNullOrEmpty(event.filter)? \"true\" : event.filter)}"
+                              }
+                            ],
+                            "operator": "and"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${event.orderby}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "StudentBiodatum,SchoolCourse,StudySession"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "getStudentCourseRegistrationsResult",
+                            "type": "set",
+                            "value": "${result.Value.AsODataEnumerable()}",
+                            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.StudentCourseRegistration>"
+                          },
+                          {
+                            "name": "getStudentCourseRegistrationsCount",
+                            "type": "set",
+                            "value": "${result.Count}",
+                            "valueType": "int"
+                          }
+                        ],
+                        "type": "invoke",
+                        "error": [
+                          {
+                            "detail": "Unable to load StudentCourseRegistrations",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ]
+                      }
+                    ],
+                    "rowSelect": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "CourseRegistrationID",
+                            "value": "${event.CourseRegistrationID}"
+                          }
+                        ],
+                        "path": "edit-student-course-registration",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "title": "",
+                  "columns": [
+                    {
+                      "property": "CourseRegistrationID",
+                      "title": "Course Registration ID"
+                    },
+                    {
+                      "property": "BiodataID",
+                      "sortProperty": "StudentBiodatum.Surname",
+                      "filterProperty": "StudentBiodatum.Surname",
+                      "template": "${data.StudentBiodatum?.Surname}",
+                      "title": "Student Biodatum"
+                    },
+                    {
+                      "property": "CourseOfStudyID",
+                      "sortProperty": "SchoolCourse.CourseOfStudyName",
+                      "filterProperty": "SchoolCourse.CourseOfStudyName",
+                      "template": "${data.SchoolCourse?.CourseOfStudyName}",
+                      "title": "School Course"
+                    },
+                    {
+                      "property": "StudySessionID",
+                      "sortProperty": "StudySession.StudySessionName",
+                      "filterProperty": "StudySession.StudySessionName",
+                      "template": "${data.StudySession?.StudySessionName}",
+                      "title": "Study Session"
+                    },
+                    {
+                      "property": "IsPrivateStudent",
+                      "title": "Is Private Student"
+                    },
+                    {
+                      "property": "PrivateTrainingVenue",
+                      "title": "Private Training Venue"
+                    },
+                    {
+                      "property": "PrivateTrainingTime",
+                      "title": "Private Training Time"
+                    },
+                    {
+                      "property": "Signature",
+                      "title": "Signature"
+                    },
+                    {
+                      "filterable": false,
+                      "sortable": false,
+                      "width": "70px",
+                      "textAlign": "center",
+                      "template": [
+                        {
+                          "attributes": [
+                            {
+                              "name": "@onclick:stopPropagation",
+                              "value": true
+                            }
+                          ],
+                          "buttonStyle": "danger",
+                          "icon": "close",
+                          "name": "gridDeleteButton",
+                          "text": "",
+                          "size": "sm",
+                          "type": "button",
+                          "events": {
+                            "click": [
+                              {
+                                "condition": "await DialogService.Confirm(\"Are you sure you want to delete this record?\") == true",
+                                "error": [
+                                  {
+                                    "detail": "Unable to delete StudentCourseRegistration",
+                                    "severity": "error",
+                                    "summary": "Error",
+                                    "type": "notify"
+                                  }
+                                ],
+                                "name": "ConData.deleteStudentCourseRegistration",
+                                "parameters": [
+                                  {
+                                    "name": "CourseRegistrationID",
+                                    "value": "${data.CourseRegistrationID}"
+                                  }
+                                ],
+                                "then": [
+                                  {
+                                    "code": "await grid0.Reload();",
+                                    "condition": "result != null",
+                                    "type": "execute"
+                                  }
+                                ],
+                                "type": "invoke"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "datagrid",
+                  "count": "${getStudentCourseRegistrationsCount}",
+                  "itemType": "GodswillEduRecord.Models.ConData.StudentCourseRegistration"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "condition": "string.IsNullOrEmpty(search)",
+        "name": "search",
+        "type": "set",
+        "value": "\"\"",
+        "valueType": "string"
+      }
+    ]
+  },
+  "name": "Student Course Registrations",
+  "layout": "Main",
+  "access": [
+    "Authenticated"
+  ]
+}

@@ -1,0 +1,465 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Student Biodatum",
+                              "component": "BiodataID",
+                              "name": "BiodataIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStudentBiodataResult}",
+                              "textProperty": "Surname",
+                              "valueProperty": "BiodataID",
+                              "placeholder": "Choose StudentBiodatum",
+                              "valueType": "Int64",
+                              "type": "dropdown",
+                              "name": "BiodataID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentcourseregistration.BiodataID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "BiodataIDRequiredValidator",
+                              "component": "BiodataID",
+                              "text": "BiodataID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "School Course",
+                              "component": "CourseOfStudyID",
+                              "name": "CourseOfStudyIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getSchoolCoursesResult}",
+                              "textProperty": "CourseOfStudyName",
+                              "valueProperty": "CourseOfStudyID",
+                              "placeholder": "Choose SchoolCourse",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "CourseOfStudyID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentcourseregistration.CourseOfStudyID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "CourseOfStudyIDRequiredValidator",
+                              "component": "CourseOfStudyID",
+                              "text": "CourseOfStudyID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Study Session",
+                              "component": "StudySessionID",
+                              "name": "StudySessionIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStudySessionsResult}",
+                              "textProperty": "StudySessionName",
+                              "valueProperty": "StudySessionID",
+                              "placeholder": "Choose StudySession",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "StudySessionID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentcourseregistration.StudySessionID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "StudySessionIDRequiredValidator",
+                              "component": "StudySessionID",
+                              "text": "StudySessionID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Is Private Student",
+                              "component": "IsPrivateStudent",
+                              "name": "IsPrivateStudentLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "bool?",
+                              "type": "checkbox",
+                              "name": "IsPrivateStudent",
+                              "triState": true,
+                              "value": "${studentcourseregistration.IsPrivateStudent}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Private Training Venue",
+                              "component": "PrivateTrainingVenue",
+                              "name": "PrivateTrainingVenueLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "type": "textbox",
+                              "name": "PrivateTrainingVenue",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${studentcourseregistration.PrivateTrainingVenue}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Private Training Time",
+                              "component": "PrivateTrainingTime",
+                              "name": "PrivateTrainingTimeLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "PrivateTrainingTime",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${studentcourseregistration.PrivateTrainingTime}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Signature",
+                              "component": "Signature",
+                              "name": "SignatureLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "type": "textbox",
+                              "name": "Signature",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentcourseregistration.Signature}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "SignatureRequiredValidator",
+                              "component": "Signature",
+                              "text": "Signature is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "style": {
+                                "marginLeft": "1rem"
+                              },
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new StudentCourseRegistration!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ConData.createStudentCourseRegistration",
+                        "parameters": [
+                          {
+                            "name": "StudentCourseRegistration",
+                            "value": "${studentcourseregistration}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${studentcourseregistration}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${studentcourseregistration}",
+                  "visible": "${studentcourseregistration != null}",
+                  "itemType": "GodswillEduRecord.Models.ConData.StudentCourseRegistration"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ConData.getStudentBiodata",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStudentBiodataResult",
+            "type": "set",
+            "value": "${result.Value.AsODataEnumerable()}",
+            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.StudentBiodatum>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ConData.getSchoolCourses",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getSchoolCoursesResult",
+            "type": "set",
+            "value": "${result.Value.AsODataEnumerable()}",
+            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.SchoolCourse>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ConData.getStudySessions",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStudySessionsResult",
+            "type": "set",
+            "value": "${result.Value.AsODataEnumerable()}",
+            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.StudySession>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "studentcourseregistration",
+        "type": "set",
+        "value": "new GodswillEduRecord.Models.ConData.StudentCourseRegistration(){}",
+        "valueType": "GodswillEduRecord.Models.ConData.StudentCourseRegistration"
+      }
+    ]
+  },
+  "name": "Add Student Course Registration",
+  "layout": "Main",
+  "access": [
+    "Authenticated"
+  ]
+}

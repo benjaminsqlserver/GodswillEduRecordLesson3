@@ -1,0 +1,65 @@
+﻿@page "/next-of-kins"
+@layout MainLayout
+@inherits GodswillEduRecord.Pages.NextOfKinsComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using GodswillEduRecord.Models.ConData
+@using Microsoft.AspNetCore.Identity;
+@using GodswillEduRecord.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="Next Of Kins">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@Button0Click">
+        </RadzenButton>
+        <RadzenSplitButton Icon="get_app" style="margin-left: 10px; margin-bottom: 10px" Text="Export" Click="@Splitbutton0Click">
+          <ChildContent>
+            <RadzenSplitButtonItem Text="Excel" Value="xlsx">
+            </RadzenSplitButtonItem>
+            <RadzenSplitButtonItem Text="CSV" Value="csv">
+            </RadzenSplitButtonItem>
+          </ChildContent>
+        </RadzenSplitButton>
+        <RadzenTextBox Placeholder="Search ..." style="display: block; margin-bottom: 10px; width: 100%" Name="Textbox0" @oninput="@(async(args) => {search = $"{args.Value}";await grid0.GoToPage(0);await grid0.Reload();})">
+        </RadzenTextBox>
+        <RadzenDataGrid @ref="grid0" AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" Data="@getNextOfKinsResult" Count="@getNextOfKinsCount" TItem="GodswillEduRecord.Models.ConData.NextOfKin" LoadData="@Grid0LoadData" RowSelect="@Grid0RowSelect">
+          <Columns>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.NextOfKin" Property="NextOfKinID" Title="Next Of Kin ID">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.NextOfKin" Property="BiodataID" SortProperty="StudentBiodatum.Surname" FilterProperty="StudentBiodatum.Surname" Title="Student Biodatum">
+              <Template Context="data">
+              @(data.StudentBiodatum?.Surname)
+              </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.NextOfKin" Property="NameOfNextOfKin" Title="Name Of Next Of Kin">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.NextOfKin" Property="RelationshipID" SortProperty="Relationship.RelationshipName" FilterProperty="Relationship.RelationshipName" Title="Relationship">
+              <Template Context="data">
+              @(data.Relationship?.RelationshipName)
+              </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.NextOfKin" Property="NextOfKinPhoneNo" Title="Next Of Kin Phone No">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.NextOfKin" Property="NextOfKinEmail" Title="Next Of Kin Email">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.NextOfKin" Property="NextOfKinContactAddress" Title="Next Of Kin Contact Address">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GodswillEduRecord.Models.ConData.NextOfKin" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+              <Template Context="godswillEduRecordModelsConDataNextOfKin">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, godswillEduRecordModelsConDataNextOfKin))" @onclick:stopPropagation="true">
+                </RadzenButton>
+              </Template>
+            </RadzenDataGridColumn>
+          </Columns>
+        </RadzenDataGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

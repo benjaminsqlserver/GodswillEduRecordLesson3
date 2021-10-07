@@ -1,0 +1,131 @@
+﻿@page "/edit-student-course-registration/{CourseRegistrationID}"
+@layout MainLayout
+@inherits GodswillEduRecord.Pages.EditStudentCourseRegistrationComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using GodswillEduRecord.Models.ConData
+@using Microsoft.AspNetCore.Identity;
+@using GodswillEduRecord.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div  class="row">
+      <div class="col-md-9">
+        <RadzenLabel style="font-weight: bold" Text="Item no longer available." Visible="@(!canEdit)">
+        </RadzenLabel>
+      </div>
+      <div class="col-md-3">
+        <RadzenButton ButtonStyle="ButtonStyle.Secondary" style="margin-bottom: 20px" Text="Close" Visible="@(!canEdit)" Click="@CloseButtonClick">
+        </RadzenButton>
+      </div>
+    </div>
+    <div  class="row">
+      <div class="col-md-9">
+        <RadzenLabel style="font-weight: bold" Text="Another user has made conflicting changes to one or more of the fields you have modified. Please reload." Visible="@hasChanges">
+        </RadzenLabel>
+      </div>
+      <div class="col-md-3">
+        <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="autorenew" style="margin-bottom: 20px" Text="Reload" Visible="@hasChanges" Click="@Button0Click">
+        </RadzenButton>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm TItem="GodswillEduRecord.Models.ConData.StudentCourseRegistration" Data="@studentcourseregistration" Visible="@(studentcourseregistration != null && canEdit)" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Student Biodatum" Component="BiodataID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getStudentBiodataResult" TextProperty="Surname" ValueProperty="BiodataID" Placeholder="Choose StudentBiodatum" style="display: block; width: 100%" @bind-Value="@(studentcourseregistration.BiodataID)" Name="BiodataID">
+                </RadzenDropDown>
+                <RadzenRequiredValidator Component="BiodataID" Text="BiodataID is required" style="position: absolute" DefaultValue="0">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="School Course" Component="CourseOfStudyID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getSchoolCoursesResult" TextProperty="CourseOfStudyName" ValueProperty="CourseOfStudyID" Placeholder="Choose SchoolCourse" style="display: block; width: 100%" @bind-Value="@(studentcourseregistration.CourseOfStudyID)" Name="CourseOfStudyID">
+                </RadzenDropDown>
+                <RadzenRequiredValidator Component="CourseOfStudyID" Text="CourseOfStudyID is required" style="position: absolute" DefaultValue="0">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Study Session" Component="StudySessionID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getStudySessionsResult" TextProperty="StudySessionName" ValueProperty="StudySessionID" Placeholder="Choose StudySession" style="display: block; width: 100%" @bind-Value="@(studentcourseregistration.StudySessionID)" Name="StudySessionID">
+                </RadzenDropDown>
+                <RadzenRequiredValidator Component="StudySessionID" Text="StudySessionID is required" style="position: absolute" DefaultValue="0">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Is Private Student" Component="IsPrivateStudent" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenCheckBox TriState="true" @bind-Value="@(studentcourseregistration.IsPrivateStudent)" Name="IsPrivateStudent">
+                </RadzenCheckBox>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Private Training Venue" Component="PrivateTrainingVenue" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox style="width: 100%" @bind-Value="@(studentcourseregistration.PrivateTrainingVenue)" Name="PrivateTrainingVenue">
+                </RadzenTextBox>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Private Training Time" Component="PrivateTrainingTime" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="50" style="width: 100%" @bind-Value="@(studentcourseregistration.PrivateTrainingTime)" Name="PrivateTrainingTime">
+                </RadzenTextBox>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Signature" Component="Signature" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox style="display: block; width: 100%" @bind-Value="@(studentcourseregistration.Signature)" Name="Signature">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="Signature" Text="Signature is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" style="margin-left: 1rem" Text="Cancel" Click="@Button4Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

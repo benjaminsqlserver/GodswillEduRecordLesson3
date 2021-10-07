@@ -1,0 +1,125 @@
+﻿@page "/edit-next-of-kin/{NextOfKinID}"
+@layout MainLayout
+@inherits GodswillEduRecord.Pages.EditNextOfKinComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using GodswillEduRecord.Models.ConData
+@using Microsoft.AspNetCore.Identity;
+@using GodswillEduRecord.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div  class="row">
+      <div class="col-md-9">
+        <RadzenLabel style="font-weight: bold" Text="Item no longer available." Visible="@(!canEdit)">
+        </RadzenLabel>
+      </div>
+      <div class="col-md-3">
+        <RadzenButton ButtonStyle="ButtonStyle.Secondary" style="margin-bottom: 20px" Text="Close" Visible="@(!canEdit)" Click="@CloseButtonClick">
+        </RadzenButton>
+      </div>
+    </div>
+    <div  class="row">
+      <div class="col-md-9">
+        <RadzenLabel style="font-weight: bold" Text="Another user has made conflicting changes to one or more of the fields you have modified. Please reload." Visible="@hasChanges">
+        </RadzenLabel>
+      </div>
+      <div class="col-md-3">
+        <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="autorenew" style="margin-bottom: 20px" Text="Reload" Visible="@hasChanges" Click="@Button0Click">
+        </RadzenButton>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm TItem="GodswillEduRecord.Models.ConData.NextOfKin" Data="@nextofkin" Visible="@(nextofkin != null && canEdit)" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Student Biodatum" Component="BiodataID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getStudentBiodataResult" TextProperty="Surname" ValueProperty="BiodataID" Placeholder="Choose StudentBiodatum" style="display: block; width: 100%" @bind-Value="@(nextofkin.BiodataID)" Name="BiodataID">
+                </RadzenDropDown>
+                <RadzenRequiredValidator Component="BiodataID" Text="BiodataID is required" style="position: absolute" DefaultValue="0">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Name Of Next Of Kin" Component="NameOfNextOfKin" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="250" style="display: block; width: 100%" @bind-Value="@(nextofkin.NameOfNextOfKin)" Name="NameOfNextOfKin">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="NameOfNextOfKin" Text="NameOfNextOfKin is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Relationship" Component="RelationshipID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getRelationshipsResult" TextProperty="RelationshipName" ValueProperty="RelationshipID" Placeholder="Choose Relationship" style="display: block; width: 100%" @bind-Value="@(nextofkin.RelationshipID)" Name="RelationshipID">
+                </RadzenDropDown>
+                <RadzenRequiredValidator Component="RelationshipID" Text="RelationshipID is required" style="position: absolute" DefaultValue="0">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Next Of Kin Phone No" Component="NextOfKinPhoneNo" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(nextofkin.NextOfKinPhoneNo)" Name="NextOfKinPhoneNo">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="NextOfKinPhoneNo" Text="NextOfKinPhoneNo is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Next Of Kin Email" Component="NextOfKinEmail" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(nextofkin.NextOfKinEmail)" Name="NextOfKinEmail">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="NextOfKinEmail" Text="NextOfKinEmail is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Next Of Kin Contact Address" Component="NextOfKinContactAddress" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox style="display: block; width: 100%" @bind-Value="@(nextofkin.NextOfKinContactAddress)" Name="NextOfKinContactAddress">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="NextOfKinContactAddress" Text="NextOfKinContactAddress is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" style="margin-left: 1rem" Text="Cancel" Click="@Button4Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

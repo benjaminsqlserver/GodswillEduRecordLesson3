@@ -1,0 +1,91 @@
+﻿@page "/add-student-education-history"
+@layout MainLayout
+@inherits GodswillEduRecord.Pages.AddStudentEducationHistoryComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using GodswillEduRecord.Models.ConData
+@using Microsoft.AspNetCore.Identity;
+@using GodswillEduRecord.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm Data="@studenteducationhistory" Visible="@(studenteducationhistory != null)" TItem="GodswillEduRecord.Models.ConData.StudentEducationHistory" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Student Biodatum" Component="BiodataID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getStudentBiodataResult" TextProperty="Surname" ValueProperty="BiodataID" Placeholder="Choose StudentBiodatum" style="display: block; width: 100%" @bind-Value="@(studenteducationhistory.BiodataID)" Name="BiodataID">
+                </RadzenDropDown>
+                <RadzenRequiredValidator Component="BiodataID" Text="BiodataID is required" style="position: absolute" DefaultValue="0">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Name Of Institution" Component="NameOfInstitution" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="350" style="display: block; width: 100%" @bind-Value="@(studenteducationhistory.NameOfInstitution)" Name="NameOfInstitution">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="NameOfInstitution" Text="NameOfInstitution is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Start Date" Component="StartDate" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDatePicker DateFormat="dd/MM/yyyy" style="display: block; width: 100%" @bind-Value="@(studenteducationhistory.StartDate)" Name="StartDate">
+                </RadzenDatePicker>
+                <RadzenRequiredValidator Component="StartDate" Text="StartDate is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="End Date" Component="EndDate" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDatePicker DateFormat="dd/MM/yyyy" style="width: 100%" @bind-Value="@(studenteducationhistory.EndDate)" Name="EndDate">
+                </RadzenDatePicker>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Qualification" Component="QualificationObtainedID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getQualificationsResult" TextProperty="QualificationName" ValueProperty="QualificationID" Placeholder="Choose Qualification" style="display: block; width: 100%" @bind-Value="@(studenteducationhistory.QualificationObtainedID)" Name="QualificationObtainedID">
+                </RadzenDropDown>
+                <RadzenRequiredValidator Component="QualificationObtainedID" Text="QualificationObtainedID is required" style="position: absolute" DefaultValue="0">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" style="margin-left: 1rem" Text="Cancel" Click="@Button2Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

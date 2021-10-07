@@ -1,0 +1,647 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Surname",
+                              "component": "Surname",
+                              "name": "SurnameLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "Surname",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentbiodatum.Surname}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "SurnameRequiredValidator",
+                              "component": "Surname",
+                              "text": "Surname is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "First Name",
+                              "component": "FirstName",
+                              "name": "FirstNameLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "FirstName",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentbiodatum.FirstName}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "FirstNameRequiredValidator",
+                              "component": "FirstName",
+                              "text": "FirstName is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Other Names",
+                              "component": "OtherNames",
+                              "name": "OtherNamesLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 101,
+                              "type": "textbox",
+                              "name": "OtherNames",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${studentbiodatum.OtherNames}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Contact Address",
+                              "component": "ContactAddress",
+                              "name": "ContactAddressLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "type": "textbox",
+                              "name": "ContactAddress",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentbiodatum.ContactAddress}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "ContactAddressRequiredValidator",
+                              "component": "ContactAddress",
+                              "text": "ContactAddress is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Date Of Birth",
+                              "component": "DateOfBirth",
+                              "name": "DateOfBirthLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime",
+                              "dateFormat": "dd/MM/yyyy",
+                              "type": "datepicker",
+                              "name": "DateOfBirth",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentbiodatum.DateOfBirth}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "DateOfBirthRequiredValidator",
+                              "component": "DateOfBirth",
+                              "text": "DateOfBirth is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Gender",
+                              "component": "GenderID",
+                              "name": "GenderIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getGendersResult}",
+                              "textProperty": "GenderName",
+                              "valueProperty": "GenderID",
+                              "placeholder": "Choose Gender",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "GenderID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentbiodatum.GenderID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "GenderIDRequiredValidator",
+                              "component": "GenderID",
+                              "text": "GenderID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "State",
+                              "component": "StateOfOriginID",
+                              "name": "StateOfOriginIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStatesResult}",
+                              "textProperty": "StateName",
+                              "valueProperty": "StateID",
+                              "placeholder": "Choose State",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "StateOfOriginID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentbiodatum.StateOfOriginID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "StateOfOriginIDRequiredValidator",
+                              "component": "StateOfOriginID",
+                              "text": "StateOfOriginID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Phone Number",
+                              "component": "PhoneNumber",
+                              "name": "PhoneNumberLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "PhoneNumber",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentbiodatum.PhoneNumber}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "PhoneNumberRequiredValidator",
+                              "component": "PhoneNumber",
+                              "text": "PhoneNumber is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Email Address",
+                              "component": "EmailAddress",
+                              "name": "EmailAddressLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "EmailAddress",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentbiodatum.EmailAddress}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "EmailAddressRequiredValidator",
+                              "component": "EmailAddress",
+                              "text": "EmailAddress is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Facebook Id",
+                              "component": "FacebookID",
+                              "name": "FacebookIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "FacebookID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${studentbiodatum.FacebookID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Picture",
+                              "component": "Picture",
+                              "name": "PictureLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "type": "textbox",
+                              "name": "Picture",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${studentbiodatum.Picture}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "style": {
+                                "marginLeft": "1rem"
+                              },
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new StudentBiodatum!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ConData.createStudentBiodatum",
+                        "parameters": [
+                          {
+                            "name": "StudentBiodatum",
+                            "value": "${studentbiodatum}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${studentbiodatum}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${studentbiodatum}",
+                  "visible": "${studentbiodatum != null}",
+                  "itemType": "GodswillEduRecord.Models.ConData.StudentBiodatum"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ConData.getGenders",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getGendersResult",
+            "type": "set",
+            "value": "${result.Value.AsODataEnumerable()}",
+            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.Gender>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ConData.getStates",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStatesResult",
+            "type": "set",
+            "value": "${result.Value.AsODataEnumerable()}",
+            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.State>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "studentbiodatum",
+        "type": "set",
+        "value": "new GodswillEduRecord.Models.ConData.StudentBiodatum(){}",
+        "valueType": "GodswillEduRecord.Models.ConData.StudentBiodatum"
+      }
+    ]
+  },
+  "name": "Add Student Biodatum",
+  "layout": "Main",
+  "access": [
+    "Authenticated"
+  ]
+}

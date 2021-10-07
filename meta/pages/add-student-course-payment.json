@@ -1,0 +1,431 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Student Biodatum",
+                              "component": "BiodataID",
+                              "name": "BiodataIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStudentBiodataResult}",
+                              "textProperty": "Surname",
+                              "valueProperty": "BiodataID",
+                              "placeholder": "Choose StudentBiodatum",
+                              "valueType": "Int64",
+                              "type": "dropdown",
+                              "name": "BiodataID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentcoursepayment.BiodataID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "BiodataIDRequiredValidator",
+                              "component": "BiodataID",
+                              "text": "BiodataID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "School Course",
+                              "component": "CourseOfStudyID",
+                              "name": "CourseOfStudyIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getSchoolCoursesResult}",
+                              "textProperty": "CourseOfStudyName",
+                              "valueProperty": "CourseOfStudyID",
+                              "placeholder": "Choose SchoolCourse",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "CourseOfStudyID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentcoursepayment.CourseOfStudyID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "CourseOfStudyIDRequiredValidator",
+                              "component": "CourseOfStudyID",
+                              "text": "CourseOfStudyID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Payment Date",
+                              "component": "PaymentDate",
+                              "name": "PaymentDateLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime",
+                              "dateFormat": "dd/MM/yyyy",
+                              "type": "datepicker",
+                              "name": "PaymentDate",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentcoursepayment.PaymentDate}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "PaymentDateRequiredValidator",
+                              "component": "PaymentDate",
+                              "text": "PaymentDate is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Course Fee",
+                              "component": "CourseFee",
+                              "name": "CourseFeeLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "decimal",
+                              "type": "numeric",
+                              "name": "CourseFee",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentcoursepayment.CourseFee}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "CourseFeeRequiredValidator",
+                              "component": "CourseFee",
+                              "text": "CourseFee is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Amount Paid",
+                              "component": "AmountPaid",
+                              "name": "AmountPaidLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "decimal",
+                              "type": "numeric",
+                              "name": "AmountPaid",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentcoursepayment.AmountPaid}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "AmountPaidRequiredValidator",
+                              "component": "AmountPaid",
+                              "text": "AmountPaid is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Balance",
+                              "component": "Balance",
+                              "name": "BalanceLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "decimal",
+                              "type": "numeric",
+                              "name": "Balance",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studentcoursepayment.Balance}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "BalanceRequiredValidator",
+                              "component": "Balance",
+                              "text": "Balance is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "style": {
+                                "marginLeft": "1rem"
+                              },
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new StudentCoursePayment!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ConData.createStudentCoursePayment",
+                        "parameters": [
+                          {
+                            "name": "StudentCoursePayment",
+                            "value": "${studentcoursepayment}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${studentcoursepayment}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${studentcoursepayment}",
+                  "visible": "${studentcoursepayment != null}",
+                  "itemType": "GodswillEduRecord.Models.ConData.StudentCoursePayment"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ConData.getStudentBiodata",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStudentBiodataResult",
+            "type": "set",
+            "value": "${result.Value.AsODataEnumerable()}",
+            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.StudentBiodatum>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ConData.getSchoolCourses",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getSchoolCoursesResult",
+            "type": "set",
+            "value": "${result.Value.AsODataEnumerable()}",
+            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.SchoolCourse>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "studentcoursepayment",
+        "type": "set",
+        "value": "new GodswillEduRecord.Models.ConData.StudentCoursePayment(){}",
+        "valueType": "GodswillEduRecord.Models.ConData.StudentCoursePayment"
+      }
+    ]
+  },
+  "name": "Add Student Course Payment",
+  "layout": "Main",
+  "access": [
+    "Authenticated"
+  ]
+}

@@ -1,0 +1,419 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Student Biodata"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "icon": "add_circle_outline",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "text": "Add",
+                  "type": "button",
+                  "events": {
+                    "click": [
+                      {
+                        "path": "add-student-biodatum",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "events": {
+                    "click": [
+                      {
+                        "condition": "${event?.Value == \"csv\"}",
+                        "fileName": "Student Biodata",
+                        "name": "ConData.getStudentBiodata",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "${grid0.Query.Filter}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${grid0.Query.OrderBy}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "Gender,State"
+                          },
+                          {
+                            "name": "$select",
+                            "value": "BiodataID,Surname,FirstName,OtherNames,ContactAddress,DateOfBirth,Gender.GenderName,State.StateName,PhoneNumber,EmailAddress,FacebookID,Picture"
+                          }
+                        ],
+                        "type": "export"
+                      },
+                      {
+                        "condition": "${event == null || event.Value == \"xlsx\"}",
+                        "fileName": "Student Biodata",
+                        "format": "xlsx",
+                        "name": "ConData.getStudentBiodata",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "${grid0.Query.Filter}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${grid0.Query.OrderBy}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "Gender,State"
+                          },
+                          {
+                            "name": "$select",
+                            "value": "BiodataID,Surname,FirstName,OtherNames,ContactAddress,DateOfBirth,Gender.GenderName,State.StateName,PhoneNumber,EmailAddress,FacebookID,Picture"
+                          }
+                        ],
+                        "type": "export"
+                      }
+                    ]
+                  },
+                  "icon": "get_app",
+                  "items": [
+                    {
+                      "icon": "",
+                      "text": "Excel",
+                      "value": "xlsx"
+                    },
+                    {
+                      "icon": "",
+                      "text": "CSV",
+                      "value": "csv"
+                    }
+                  ],
+                  "name": "splitbutton0",
+                  "style": {
+                    "marginLeft": "10px",
+                    "marginBottom": "10px"
+                  },
+                  "text": "Export",
+                  "type": "splitbutton"
+                },
+                {
+                  "attributes": [
+                    {
+                      "name": "@oninput",
+                      "value": "@(async(args) => {search = $\"{args.Value}\";await grid0.GoToPage(0);await grid0.Reload();})"
+                    }
+                  ],
+                  "name": "textbox0",
+                  "placeholder": "Search ...",
+                  "style": {
+                    "display": "block",
+                    "marginBottom": "10px",
+                    "width": "100%"
+                  },
+                  "type": "textbox",
+                  "value": ""
+                },
+                {
+                  "name": "grid0",
+                  "allowFiltering": true,
+                  "filterMode": "advanced",
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "data": "${getStudentBiodataResult}",
+                  "events": {
+                    "loadData": [
+                      {
+                        "name": "ConData.getStudentBiodata",
+                        "parameters": [
+                          {
+                            "name": "$top",
+                            "value": "event.top"
+                          },
+                          {
+                            "name": "$skip",
+                            "value": "event.skip"
+                          },
+                          {
+                            "name": "$count",
+                            "value": "event.top != null && event.skip != null"
+                          },
+                          {
+                            "name": "$filter",
+                            "value": [
+                              {
+                                "filters": [
+                                  {
+                                    "operation": "contains",
+                                    "property": "Surname",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "FirstName",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "OtherNames",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "ContactAddress",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "PhoneNumber",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "EmailAddress",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "FacebookID",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "Picture",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  }
+                                ],
+                                "operator": "or"
+                              },
+                              {
+                                "value": "${(string.IsNullOrEmpty(event.filter)? \"true\" : event.filter)}"
+                              }
+                            ],
+                            "operator": "and"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${event.orderby}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "Gender,State"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "getStudentBiodataResult",
+                            "type": "set",
+                            "value": "${result.Value.AsODataEnumerable()}",
+                            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.StudentBiodatum>"
+                          },
+                          {
+                            "name": "getStudentBiodataCount",
+                            "type": "set",
+                            "value": "${result.Count}",
+                            "valueType": "int"
+                          }
+                        ],
+                        "type": "invoke",
+                        "error": [
+                          {
+                            "detail": "Unable to load StudentBiodata",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ]
+                      }
+                    ],
+                    "rowSelect": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "BiodataID",
+                            "value": "${event.BiodataID}"
+                          }
+                        ],
+                        "path": "edit-student-biodatum",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "title": "",
+                  "columns": [
+                    {
+                      "property": "BiodataID",
+                      "title": "Biodata ID"
+                    },
+                    {
+                      "property": "Surname",
+                      "title": "Surname"
+                    },
+                    {
+                      "property": "FirstName",
+                      "title": "First Name"
+                    },
+                    {
+                      "property": "OtherNames",
+                      "title": "Other Names"
+                    },
+                    {
+                      "property": "ContactAddress",
+                      "title": "Contact Address"
+                    },
+                    {
+                      "property": "DateOfBirth",
+                      "formatString": "{0:dd/MM/yyyy}",
+                      "title": "Date Of Birth"
+                    },
+                    {
+                      "property": "GenderID",
+                      "sortProperty": "Gender.GenderName",
+                      "filterProperty": "Gender.GenderName",
+                      "template": "${data.Gender?.GenderName}",
+                      "title": "Gender"
+                    },
+                    {
+                      "property": "StateOfOriginID",
+                      "sortProperty": "State.StateName",
+                      "filterProperty": "State.StateName",
+                      "template": "${data.State?.StateName}",
+                      "title": "State"
+                    },
+                    {
+                      "property": "PhoneNumber",
+                      "title": "Phone Number"
+                    },
+                    {
+                      "property": "EmailAddress",
+                      "title": "Email Address"
+                    },
+                    {
+                      "property": "FacebookID",
+                      "title": "Facebook ID"
+                    },
+                    {
+                      "property": "Picture",
+                      "title": "Picture"
+                    },
+                    {
+                      "filterable": false,
+                      "sortable": false,
+                      "width": "70px",
+                      "textAlign": "center",
+                      "template": [
+                        {
+                          "attributes": [
+                            {
+                              "name": "@onclick:stopPropagation",
+                              "value": true
+                            }
+                          ],
+                          "buttonStyle": "danger",
+                          "icon": "close",
+                          "name": "gridDeleteButton",
+                          "text": "",
+                          "size": "sm",
+                          "type": "button",
+                          "events": {
+                            "click": [
+                              {
+                                "condition": "await DialogService.Confirm(\"Are you sure you want to delete this record?\") == true",
+                                "error": [
+                                  {
+                                    "detail": "Unable to delete StudentBiodatum",
+                                    "severity": "error",
+                                    "summary": "Error",
+                                    "type": "notify"
+                                  }
+                                ],
+                                "name": "ConData.deleteStudentBiodatum",
+                                "parameters": [
+                                  {
+                                    "name": "BiodataID",
+                                    "value": "${data.BiodataID}"
+                                  }
+                                ],
+                                "then": [
+                                  {
+                                    "code": "await grid0.Reload();",
+                                    "condition": "result != null",
+                                    "type": "execute"
+                                  }
+                                ],
+                                "type": "invoke"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "datagrid",
+                  "count": "${getStudentBiodataCount}",
+                  "itemType": "GodswillEduRecord.Models.ConData.StudentBiodatum"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "condition": "string.IsNullOrEmpty(search)",
+        "name": "search",
+        "type": "set",
+        "value": "\"\"",
+        "valueType": "string"
+      }
+    ]
+  },
+  "name": "Student Biodata",
+  "layout": "Main",
+  "access": [
+    "Authenticated"
+  ]
+}

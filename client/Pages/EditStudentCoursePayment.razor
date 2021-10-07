@@ -1,0 +1,125 @@
+﻿@page "/edit-student-course-payment/{PaymentID}"
+@layout MainLayout
+@inherits GodswillEduRecord.Pages.EditStudentCoursePaymentComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using GodswillEduRecord.Models.ConData
+@using Microsoft.AspNetCore.Identity;
+@using GodswillEduRecord.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div  class="row">
+      <div class="col-md-9">
+        <RadzenLabel style="font-weight: bold" Text="Item no longer available." Visible="@(!canEdit)">
+        </RadzenLabel>
+      </div>
+      <div class="col-md-3">
+        <RadzenButton ButtonStyle="ButtonStyle.Secondary" style="margin-bottom: 20px" Text="Close" Visible="@(!canEdit)" Click="@CloseButtonClick">
+        </RadzenButton>
+      </div>
+    </div>
+    <div  class="row">
+      <div class="col-md-9">
+        <RadzenLabel style="font-weight: bold" Text="Another user has made conflicting changes to one or more of the fields you have modified. Please reload." Visible="@hasChanges">
+        </RadzenLabel>
+      </div>
+      <div class="col-md-3">
+        <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="autorenew" style="margin-bottom: 20px" Text="Reload" Visible="@hasChanges" Click="@Button0Click">
+        </RadzenButton>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm TItem="GodswillEduRecord.Models.ConData.StudentCoursePayment" Data="@studentcoursepayment" Visible="@(studentcoursepayment != null && canEdit)" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Student Biodatum" Component="BiodataID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getStudentBiodataResult" TextProperty="Surname" ValueProperty="BiodataID" Placeholder="Choose StudentBiodatum" style="display: block; width: 100%" @bind-Value="@(studentcoursepayment.BiodataID)" Name="BiodataID">
+                </RadzenDropDown>
+                <RadzenRequiredValidator Component="BiodataID" Text="BiodataID is required" style="position: absolute" DefaultValue="0">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="School Course" Component="CourseOfStudyID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getSchoolCoursesResult" TextProperty="CourseOfStudyName" ValueProperty="CourseOfStudyID" Placeholder="Choose SchoolCourse" style="display: block; width: 100%" @bind-Value="@(studentcoursepayment.CourseOfStudyID)" Name="CourseOfStudyID">
+                </RadzenDropDown>
+                <RadzenRequiredValidator Component="CourseOfStudyID" Text="CourseOfStudyID is required" style="position: absolute" DefaultValue="0">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Payment Date" Component="PaymentDate" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDatePicker DateFormat="dd/MM/yyyy" style="display: block; width: 100%" @bind-Value="@(studentcoursepayment.PaymentDate)" Name="PaymentDate">
+                </RadzenDatePicker>
+                <RadzenRequiredValidator Component="PaymentDate" Text="PaymentDate is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Course Fee" Component="CourseFee" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenNumeric style="display: block; width: 100%" @bind-Value="@(studentcoursepayment.CourseFee)" Name="CourseFee">
+                </RadzenNumeric>
+                <RadzenRequiredValidator Component="CourseFee" Text="CourseFee is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Amount Paid" Component="AmountPaid" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenNumeric style="display: block; width: 100%" @bind-Value="@(studentcoursepayment.AmountPaid)" Name="AmountPaid">
+                </RadzenNumeric>
+                <RadzenRequiredValidator Component="AmountPaid" Text="AmountPaid is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Balance" Component="Balance" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenNumeric style="display: block; width: 100%" @bind-Value="@(studentcoursepayment.Balance)" Name="Balance">
+                </RadzenNumeric>
+                <RadzenRequiredValidator Component="Balance" Text="Balance is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" style="margin-left: 1rem" Text="Cancel" Click="@Button4Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

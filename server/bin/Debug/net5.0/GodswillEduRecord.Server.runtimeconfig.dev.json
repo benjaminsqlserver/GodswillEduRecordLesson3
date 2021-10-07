@@ -1,0 +1,9 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\GIPEXTraining Cons\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\GIPEXTraining Cons\\.nuget\\packages",
+      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+    ]
+  }
+}

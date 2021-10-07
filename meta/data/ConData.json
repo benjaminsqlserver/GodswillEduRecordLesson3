@@ -1,0 +1,2422 @@
+{
+  "info": {
+    "title": "ConData",
+    "x-type": "odata",
+    "x-connector": "mssql",
+    "x-connector-version": 15,
+    "x-concurrency": true
+  },
+  "definitions": {
+    "Gender": {
+      "x-table": "dbo.Genders",
+      "resource": "Genders",
+      "required": [
+        "GenderName"
+      ],
+      "properties": {
+        "GenderID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "Gender",
+              "name": "StudentBiodata",
+              "type": "StudentBiodatum"
+            }
+          ]
+        },
+        "GenderName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "StudentBiodata": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StudentBiodatum"
+          }
+        }
+      }
+    },
+    "NextOfKin": {
+      "x-table": "dbo.NextOfKins",
+      "resource": "NextOfKins",
+      "required": [
+        "BiodataID",
+        "NameOfNextOfKin",
+        "RelationshipID",
+        "NextOfKinPhoneNo",
+        "NextOfKinEmail",
+        "NextOfKinContactAddress"
+      ],
+      "properties": {
+        "NextOfKinID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64"
+        },
+        "StudentBiodatum": {
+          "type": "object",
+          "$ref": "#/definitions/StudentBiodatum"
+        },
+        "BiodataID": {
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-foreignKey": {
+            "parentTable": "StudentBiodata",
+            "parentEntityType": "StudentBiodatum",
+            "type": "StudentBiodatum",
+            "principalKey": "BiodataID",
+            "name": "StudentBiodatum",
+            "textProperty": "Surname",
+            "navigationProperty": "NextOfKins"
+          }
+        },
+        "NameOfNextOfKin": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 250
+        },
+        "Relationship": {
+          "type": "object",
+          "$ref": "#/definitions/Relationship"
+        },
+        "RelationshipID": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Relationships",
+            "parentEntityType": "Relationship",
+            "type": "Relationship",
+            "principalKey": "RelationshipID",
+            "name": "Relationship",
+            "textProperty": "RelationshipName",
+            "navigationProperty": "NextOfKins"
+          }
+        },
+        "NextOfKinPhoneNo": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "NextOfKinEmail": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "NextOfKinContactAddress": {
+          "x-nullable": false,
+          "type": "string"
+        }
+      }
+    },
+    "Qualification": {
+      "x-table": "dbo.Qualifications",
+      "resource": "Qualifications",
+      "required": [
+        "QualificationName"
+      ],
+      "properties": {
+        "QualificationID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "Qualification",
+              "name": "StudentEducationHistories",
+              "type": "StudentEducationHistory"
+            }
+          ]
+        },
+        "QualificationName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "StudentEducationHistories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StudentEducationHistory"
+          }
+        }
+      }
+    },
+    "Relationship": {
+      "x-table": "dbo.Relationships",
+      "resource": "Relationships",
+      "required": [
+        "RelationshipName"
+      ],
+      "properties": {
+        "RelationshipID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "Relationship",
+              "name": "NextOfKins",
+              "type": "NextOfKin"
+            }
+          ]
+        },
+        "RelationshipName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "NextOfKins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NextOfKin"
+          }
+        }
+      }
+    },
+    "SchoolCourse": {
+      "x-table": "dbo.SchoolCourses",
+      "resource": "SchoolCourses",
+      "required": [
+        "CourseOfStudyName",
+        "DurationInMonths"
+      ],
+      "properties": {
+        "CourseOfStudyID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "SchoolCourse",
+              "name": "StudentCourseRegistrations",
+              "type": "StudentCourseRegistration"
+            },
+            {
+              "inversePropertyName": "SchoolCourse",
+              "name": "StudentCoursePayments",
+              "type": "StudentCoursePayment"
+            }
+          ]
+        },
+        "CourseOfStudyName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 300
+        },
+        "CourseFee": {
+          "x-precision": 18,
+          "x-scale": 2,
+          "type": "number",
+          "format": "decimal"
+        },
+        "DurationInMonths": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer"
+        },
+        "StudentCourseRegistrations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StudentCourseRegistration"
+          }
+        },
+        "StudentCoursePayments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StudentCoursePayment"
+          }
+        }
+      }
+    },
+    "State": {
+      "x-table": "dbo.States",
+      "resource": "States",
+      "required": [
+        "StateName"
+      ],
+      "properties": {
+        "StateID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "State",
+              "name": "StudentBiodata",
+              "type": "StudentBiodatum"
+            }
+          ]
+        },
+        "StateName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "StudentBiodata": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StudentBiodatum"
+          }
+        }
+      }
+    },
+    "StudentBiodatum": {
+      "x-table": "dbo.StudentBiodata",
+      "resource": "StudentBiodata",
+      "required": [
+        "Surname",
+        "FirstName",
+        "ContactAddress",
+        "DateOfBirth",
+        "GenderID",
+        "StateOfOriginID",
+        "PhoneNumber",
+        "EmailAddress"
+      ],
+      "properties": {
+        "BiodataID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-navigation": [
+            {
+              "inversePropertyName": "StudentBiodatum",
+              "name": "StudentEducationHistories",
+              "type": "StudentEducationHistory"
+            },
+            {
+              "inversePropertyName": "StudentBiodatum",
+              "name": "NextOfKins",
+              "type": "NextOfKin"
+            },
+            {
+              "inversePropertyName": "StudentBiodatum",
+              "name": "StudentCourseRegistrations",
+              "type": "StudentCourseRegistration"
+            },
+            {
+              "inversePropertyName": "StudentBiodatum",
+              "name": "StudentCoursePayments",
+              "type": "StudentCoursePayment"
+            }
+          ]
+        },
+        "Surname": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "FirstName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "OtherNames": {
+          "type": "string",
+          "length": 101
+        },
+        "ContactAddress": {
+          "x-nullable": false,
+          "type": "string"
+        },
+        "DateOfBirth": {
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime2"
+        },
+        "Gender": {
+          "type": "object",
+          "$ref": "#/definitions/Gender"
+        },
+        "GenderID": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Genders",
+            "parentEntityType": "Gender",
+            "type": "Gender",
+            "principalKey": "GenderID",
+            "name": "Gender",
+            "textProperty": "GenderName",
+            "navigationProperty": "StudentBiodata"
+          }
+        },
+        "State": {
+          "type": "object",
+          "$ref": "#/definitions/State"
+        },
+        "StateOfOriginID": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "States",
+            "parentEntityType": "State",
+            "type": "State",
+            "principalKey": "StateID",
+            "name": "State",
+            "textProperty": "StateName",
+            "navigationProperty": "StudentBiodata"
+          }
+        },
+        "PhoneNumber": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "EmailAddress": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "FacebookID": {
+          "type": "string",
+          "length": 50
+        },
+        "Picture": {
+          "type": "string"
+        },
+        "StudentEducationHistories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StudentEducationHistory"
+          }
+        },
+        "NextOfKins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NextOfKin"
+          }
+        },
+        "StudentCourseRegistrations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StudentCourseRegistration"
+          }
+        },
+        "StudentCoursePayments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StudentCoursePayment"
+          }
+        }
+      }
+    },
+    "StudentCoursePayment": {
+      "x-table": "dbo.StudentCoursePayments",
+      "resource": "StudentCoursePayments",
+      "required": [
+        "BiodataID",
+        "CourseOfStudyID",
+        "PaymentDate",
+        "CourseFee",
+        "AmountPaid",
+        "Balance"
+      ],
+      "properties": {
+        "PaymentID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64"
+        },
+        "StudentBiodatum": {
+          "type": "object",
+          "$ref": "#/definitions/StudentBiodatum"
+        },
+        "BiodataID": {
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-foreignKey": {
+            "parentTable": "StudentBiodata",
+            "parentEntityType": "StudentBiodatum",
+            "type": "StudentBiodatum",
+            "principalKey": "BiodataID",
+            "name": "StudentBiodatum",
+            "textProperty": "Surname",
+            "navigationProperty": "StudentCoursePayments"
+          }
+        },
+        "SchoolCourse": {
+          "type": "object",
+          "$ref": "#/definitions/SchoolCourse"
+        },
+        "CourseOfStudyID": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "SchoolCourses",
+            "parentEntityType": "SchoolCourse",
+            "type": "SchoolCourse",
+            "principalKey": "CourseOfStudyID",
+            "name": "SchoolCourse",
+            "textProperty": "CourseOfStudyName",
+            "navigationProperty": "StudentCoursePayments"
+          }
+        },
+        "PaymentDate": {
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime"
+        },
+        "CourseFee": {
+          "x-nullable": false,
+          "x-precision": 18,
+          "x-scale": 2,
+          "type": "number",
+          "format": "decimal"
+        },
+        "AmountPaid": {
+          "x-nullable": false,
+          "x-precision": 18,
+          "x-scale": 2,
+          "type": "number",
+          "format": "decimal"
+        },
+        "Balance": {
+          "x-nullable": false,
+          "x-precision": 18,
+          "x-scale": 2,
+          "type": "number",
+          "format": "decimal"
+        }
+      }
+    },
+    "StudentCourseRegistration": {
+      "x-table": "dbo.StudentCourseRegistrations",
+      "resource": "StudentCourseRegistrations",
+      "required": [
+        "BiodataID",
+        "CourseOfStudyID",
+        "StudySessionID",
+        "Signature"
+      ],
+      "properties": {
+        "CourseRegistrationID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64"
+        },
+        "StudentBiodatum": {
+          "type": "object",
+          "$ref": "#/definitions/StudentBiodatum"
+        },
+        "BiodataID": {
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-foreignKey": {
+            "parentTable": "StudentBiodata",
+            "parentEntityType": "StudentBiodatum",
+            "type": "StudentBiodatum",
+            "principalKey": "BiodataID",
+            "name": "StudentBiodatum",
+            "textProperty": "Surname",
+            "navigationProperty": "StudentCourseRegistrations"
+          }
+        },
+        "SchoolCourse": {
+          "type": "object",
+          "$ref": "#/definitions/SchoolCourse"
+        },
+        "CourseOfStudyID": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "SchoolCourses",
+            "parentEntityType": "SchoolCourse",
+            "type": "SchoolCourse",
+            "principalKey": "CourseOfStudyID",
+            "name": "SchoolCourse",
+            "textProperty": "CourseOfStudyName",
+            "navigationProperty": "StudentCourseRegistrations"
+          }
+        },
+        "StudySession": {
+          "type": "object",
+          "$ref": "#/definitions/StudySession"
+        },
+        "StudySessionID": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "StudySessions",
+            "parentEntityType": "StudySession",
+            "type": "StudySession",
+            "principalKey": "StudySessionID",
+            "name": "StudySession",
+            "textProperty": "StudySessionName",
+            "navigationProperty": "StudentCourseRegistrations"
+          }
+        },
+        "IsPrivateStudent": {
+          "type": "boolean"
+        },
+        "PrivateTrainingVenue": {
+          "type": "string"
+        },
+        "PrivateTrainingTime": {
+          "type": "string",
+          "length": 50
+        },
+        "Signature": {
+          "x-nullable": false,
+          "type": "string"
+        }
+      }
+    },
+    "StudentEducationHistory": {
+      "x-table": "dbo.StudentEducationHistories",
+      "resource": "StudentEducationHistories",
+      "required": [
+        "BiodataID",
+        "NameOfInstitution",
+        "StartDate",
+        "QualificationObtainedID"
+      ],
+      "properties": {
+        "EducationRecordID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64"
+        },
+        "StudentBiodatum": {
+          "type": "object",
+          "$ref": "#/definitions/StudentBiodatum"
+        },
+        "BiodataID": {
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-foreignKey": {
+            "parentTable": "StudentBiodata",
+            "parentEntityType": "StudentBiodatum",
+            "type": "StudentBiodatum",
+            "principalKey": "BiodataID",
+            "name": "StudentBiodatum",
+            "textProperty": "Surname",
+            "navigationProperty": "StudentEducationHistories"
+          }
+        },
+        "NameOfInstitution": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 350
+        },
+        "StartDate": {
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime2"
+        },
+        "EndDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime2"
+        },
+        "Qualification": {
+          "type": "object",
+          "$ref": "#/definitions/Qualification"
+        },
+        "QualificationObtainedID": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Qualifications",
+            "parentEntityType": "Qualification",
+            "type": "Qualification",
+            "principalKey": "QualificationID",
+            "name": "Qualification",
+            "textProperty": "QualificationName",
+            "navigationProperty": "StudentEducationHistories"
+          }
+        }
+      }
+    },
+    "StudySession": {
+      "x-table": "dbo.StudySessions",
+      "resource": "StudySessions",
+      "required": [
+        "StudySessionName",
+        "Time"
+      ],
+      "properties": {
+        "StudySessionID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "StudySession",
+              "name": "StudentCourseRegistrations",
+              "type": "StudentCourseRegistration"
+            }
+          ]
+        },
+        "StudySessionName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "Time": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "StudentCourseRegistrations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StudentCourseRegistration"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/Genders": {
+      "get": {
+        "operationId": "getGenders",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/Gender"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createGender",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Gender",
+            "schema": {
+              "$ref": "#/definitions/Gender"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Gender"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/NextOfKins": {
+      "get": {
+        "operationId": "getNextOfKins",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/NextOfKin"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createNextOfKin",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "NextOfKin",
+            "schema": {
+              "$ref": "#/definitions/NextOfKin"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/NextOfKin"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Qualifications": {
+      "get": {
+        "operationId": "getQualifications",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/Qualification"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createQualification",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Qualification",
+            "schema": {
+              "$ref": "#/definitions/Qualification"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Qualification"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Relationships": {
+      "get": {
+        "operationId": "getRelationships",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/Relationship"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createRelationship",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Relationship",
+            "schema": {
+              "$ref": "#/definitions/Relationship"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Relationship"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/SchoolCourses": {
+      "get": {
+        "operationId": "getSchoolCourses",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/SchoolCourse"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createSchoolCourse",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "SchoolCourse",
+            "schema": {
+              "$ref": "#/definitions/SchoolCourse"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/SchoolCourse"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/States": {
+      "get": {
+        "operationId": "getStates",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/State"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createState",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "State",
+            "schema": {
+              "$ref": "#/definitions/State"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/State"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StudentBiodata": {
+      "get": {
+        "operationId": "getStudentBiodata",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/StudentBiodatum"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createStudentBiodatum",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "StudentBiodatum",
+            "schema": {
+              "$ref": "#/definitions/StudentBiodatum"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/StudentBiodatum"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StudentCoursePayments": {
+      "get": {
+        "operationId": "getStudentCoursePayments",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/StudentCoursePayment"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createStudentCoursePayment",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "StudentCoursePayment",
+            "schema": {
+              "$ref": "#/definitions/StudentCoursePayment"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/StudentCoursePayment"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StudentCourseRegistrations": {
+      "get": {
+        "operationId": "getStudentCourseRegistrations",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/StudentCourseRegistration"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createStudentCourseRegistration",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "StudentCourseRegistration",
+            "schema": {
+              "$ref": "#/definitions/StudentCourseRegistration"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/StudentCourseRegistration"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StudentEducationHistories": {
+      "get": {
+        "operationId": "getStudentEducationHistories",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/StudentEducationHistory"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createStudentEducationHistory",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "StudentEducationHistory",
+            "schema": {
+              "$ref": "#/definitions/StudentEducationHistory"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/StudentEducationHistory"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StudySessions": {
+      "get": {
+        "operationId": "getStudySessions",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/StudySession"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createStudySession",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "StudySession",
+            "schema": {
+              "$ref": "#/definitions/StudySession"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/StudySession"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Genders({GenderID})": {
+      "delete": {
+        "operationId": "deleteGender",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "GenderID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getGenderByGenderID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "GenderID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Gender"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateGender",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "GenderID",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "Gender",
+            "schema": {
+              "$ref": "#/definitions/Gender"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/NextOfKins({NextOfKinID})": {
+      "delete": {
+        "operationId": "deleteNextOfKin",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "NextOfKinID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getNextOfKinByNextOfKinID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "NextOfKinID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/NextOfKin"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateNextOfKin",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "NextOfKinID",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "NextOfKin",
+            "schema": {
+              "$ref": "#/definitions/NextOfKin"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Qualifications({QualificationID})": {
+      "delete": {
+        "operationId": "deleteQualification",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "QualificationID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getQualificationByQualificationID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "QualificationID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Qualification"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateQualification",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "QualificationID",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "Qualification",
+            "schema": {
+              "$ref": "#/definitions/Qualification"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Relationships({RelationshipID})": {
+      "delete": {
+        "operationId": "deleteRelationship",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "RelationshipID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getRelationshipByRelationshipID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "RelationshipID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Relationship"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateRelationship",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "RelationshipID",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "Relationship",
+            "schema": {
+              "$ref": "#/definitions/Relationship"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/SchoolCourses({CourseOfStudyID})": {
+      "delete": {
+        "operationId": "deleteSchoolCourse",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CourseOfStudyID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getSchoolCourseByCourseOfStudyID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CourseOfStudyID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/SchoolCourse"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateSchoolCourse",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CourseOfStudyID",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "SchoolCourse",
+            "schema": {
+              "$ref": "#/definitions/SchoolCourse"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/States({StateID})": {
+      "delete": {
+        "operationId": "deleteState",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "StateID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getStateByStateID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "StateID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/State"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateState",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "StateID",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "State",
+            "schema": {
+              "$ref": "#/definitions/State"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StudentBiodata({BiodataID})": {
+      "delete": {
+        "operationId": "deleteStudentBiodatum",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "BiodataID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getStudentBiodatumByBiodataID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "BiodataID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/StudentBiodatum"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateStudentBiodatum",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "BiodataID",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "StudentBiodatum",
+            "schema": {
+              "$ref": "#/definitions/StudentBiodatum"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StudentCoursePayments({PaymentID})": {
+      "delete": {
+        "operationId": "deleteStudentCoursePayment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "PaymentID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getStudentCoursePaymentByPaymentID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "PaymentID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/StudentCoursePayment"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateStudentCoursePayment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "PaymentID",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "StudentCoursePayment",
+            "schema": {
+              "$ref": "#/definitions/StudentCoursePayment"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StudentCourseRegistrations({CourseRegistrationID})": {
+      "delete": {
+        "operationId": "deleteStudentCourseRegistration",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CourseRegistrationID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getStudentCourseRegistrationByCourseRegistrationID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CourseRegistrationID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/StudentCourseRegistration"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateStudentCourseRegistration",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CourseRegistrationID",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "StudentCourseRegistration",
+            "schema": {
+              "$ref": "#/definitions/StudentCourseRegistration"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StudentEducationHistories({EducationRecordID})": {
+      "delete": {
+        "operationId": "deleteStudentEducationHistory",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "EducationRecordID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getStudentEducationHistoryByEducationRecordID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "EducationRecordID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/StudentEducationHistory"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateStudentEducationHistory",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "EducationRecordID",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "StudentEducationHistory",
+            "schema": {
+              "$ref": "#/definitions/StudentEducationHistory"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/StudySessions({StudySessionID})": {
+      "delete": {
+        "operationId": "deleteStudySession",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "StudySessionID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getStudySessionByStudySessionID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "StudySessionID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/StudySession"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateStudySession",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "StudySessionID",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "StudySession",
+            "schema": {
+              "$ref": "#/definitions/StudySession"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "basePath": "/odata/ConData",
+  "host": "localhost:5001",
+  "schemes": [
+    "https"
+  ]
+}

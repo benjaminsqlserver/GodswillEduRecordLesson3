@@ -1,0 +1,514 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "components": [
+            {
+              "class": "col-md-9",
+              "components": [
+                {
+                  "name": "closeLabel",
+                  "style": {
+                    "fontWeight": "bold"
+                  },
+                  "text": "Item no longer available.",
+                  "type": "label",
+                  "visible": "${!canEdit}"
+                }
+              ],
+              "name": "col0",
+              "type": "col"
+            },
+            {
+              "class": "col-md-3",
+              "components": [
+                {
+                  "buttonStyle": "secondary",
+                  "events": {
+                    "click": [
+                      {
+                        "type": "close-popup"
+                      }
+                    ]
+                  },
+                  "icon": "",
+                  "name": "closeButton",
+                  "style": {
+                    "marginBottom": "20px"
+                  },
+                  "text": "Close",
+                  "type": "button",
+                  "visible": "${!canEdit}"
+                }
+              ],
+              "name": "col1",
+              "type": "col"
+            }
+          ],
+          "name": "row0",
+          "style": {},
+          "type": "row"
+        },
+        {
+          "components": [
+            {
+              "class": "col-md-9",
+              "components": [
+                {
+                  "name": "label0",
+                  "style": {
+                    "fontWeight": "bold"
+                  },
+                  "text": "Another user has made conflicting changes to one or more of the fields you have modified. Please reload.",
+                  "type": "label",
+                  "visible": "${hasChanges}"
+                }
+              ],
+              "name": "col0",
+              "type": "col"
+            },
+            {
+              "class": "col-md-3",
+              "components": [
+                {
+                  "buttonStyle": "secondary",
+                  "events": {
+                    "click": [
+                      {
+                        "code": "await this.Load()",
+                        "type": "execute"
+                      }
+                    ]
+                  },
+                  "icon": "autorenew",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "20px"
+                  },
+                  "text": "Reload",
+                  "type": "button",
+                  "visible": "${hasChanges}"
+                }
+              ],
+              "name": "col1",
+              "type": "col"
+            }
+          ],
+          "name": "row0",
+          "style": {},
+          "type": "row"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Student Biodatum",
+                              "component": "BiodataID",
+                              "name": "BiodataIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStudentBiodataResult}",
+                              "textProperty": "Surname",
+                              "valueProperty": "BiodataID",
+                              "placeholder": "Choose StudentBiodatum",
+                              "valueType": "Int64",
+                              "type": "dropdown",
+                              "name": "BiodataID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studenteducationhistory.BiodataID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "BiodataIDRequiredValidator",
+                              "component": "BiodataID",
+                              "text": "BiodataID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Name Of Institution",
+                              "component": "NameOfInstitution",
+                              "name": "NameOfInstitutionLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 350,
+                              "type": "textbox",
+                              "name": "NameOfInstitution",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studenteducationhistory.NameOfInstitution}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "NameOfInstitutionRequiredValidator",
+                              "component": "NameOfInstitution",
+                              "text": "NameOfInstitution is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Start Date",
+                              "component": "StartDate",
+                              "name": "StartDateLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime",
+                              "dateFormat": "dd/MM/yyyy",
+                              "type": "datepicker",
+                              "name": "StartDate",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studenteducationhistory.StartDate}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "StartDateRequiredValidator",
+                              "component": "StartDate",
+                              "text": "StartDate is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "End Date",
+                              "component": "EndDate",
+                              "name": "EndDateLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime?",
+                              "dateFormat": "dd/MM/yyyy",
+                              "type": "datepicker",
+                              "name": "EndDate",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${studenteducationhistory.EndDate}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Qualification",
+                              "component": "QualificationObtainedID",
+                              "name": "QualificationObtainedIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getQualificationsResult}",
+                              "textProperty": "QualificationName",
+                              "valueProperty": "QualificationID",
+                              "placeholder": "Choose Qualification",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "QualificationObtainedID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${studenteducationhistory.QualificationObtainedID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "QualificationObtainedIDRequiredValidator",
+                              "component": "QualificationObtainedID",
+                              "text": "QualificationObtainedID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "style": {
+                                "marginLeft": "1rem"
+                              },
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update StudentEducationHistory",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ConData.updateStudentEducationHistory",
+                        "parameters": [
+                          {
+                            "name": "EducationRecordID",
+                            "value": "${parameters.EducationRecordID}"
+                          },
+                          {
+                            "name": "StudentEducationHistory",
+                            "value": "${studenteducationhistory}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${studenteducationhistory}",
+                            "condition": "result.StatusCode != System.Net.HttpStatusCode.PreconditionFailed"
+                          },
+                          {
+                            "name": "hasChanges",
+                            "type": "set",
+                            "value": "result.StatusCode == System.Net.HttpStatusCode.PreconditionFailed",
+                            "valueType": "bool"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "GodswillEduRecord.Models.ConData.StudentEducationHistory",
+                  "data": "${studenteducationhistory}",
+                  "visible": "${studenteducationhistory != null && canEdit}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "hasChanges",
+        "type": "set",
+        "value": "false",
+        "valueType": "bool"
+      },
+      {
+        "name": "canEdit",
+        "type": "set",
+        "value": "true",
+        "valueType": "bool"
+      },
+      {
+        "name": "ConData.getStudentEducationHistoryByEducationRecordID",
+        "parameters": [
+          {
+            "name": "EducationRecordID",
+            "value": "${parameters.EducationRecordID}"
+          }
+        ],
+        "then": [
+          {
+            "name": "studenteducationhistory",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "GodswillEduRecord.Models.ConData.StudentEducationHistory"
+          },
+          {
+            "name": "canEdit",
+            "type": "set",
+            "value": "result != null",
+            "valueType": "bool"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      },
+      {
+        "name": "ConData.getStudentBiodata",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStudentBiodataResult",
+            "type": "set",
+            "value": "${result.Value.AsODataEnumerable()}",
+            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.StudentBiodatum>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ConData.getQualifications",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getQualificationsResult",
+            "type": "set",
+            "value": "${result.Value.AsODataEnumerable()}",
+            "valueType": "IEnumerable<GodswillEduRecord.Models.ConData.Qualification>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Student Education History",
+  "layout": "Main",
+  "access": [
+    "Authenticated"
+  ]
+}
